@@ -1,0 +1,85 @@
+
+
+1. Class EquipmentItem:
+   - Attributes: name, brand, price, quantity
+
+2. Class RentalShop:
+   - Attributes: equipment_list (list of EquipmentItem)
+
+3. Inside RentalShop class:
+   - Constructor load_equipment(equipment_file):
+      - Open equipment_file
+      - For each line in the file:
+         - Split line into name, brand, price, quantity
+         - Create EquipmentItem with the data
+         - Add EquipmentItem to equipment_list
+
+   - Method display_equipment():
+      - For each item in equipment_list:
+         - Display item details (name, brand, price, quantity)
+
+   - Method generate_invoice(customer_name, rented_items):
+      - Initialize total_amount as 0
+      - Create invoice_text: "Invoice for customer_name"
+      - Get current timestamp
+      - For each item in rented_items:
+         - Get item details from equipment_list
+         - Add item details to invoice_text
+         - Add item price to total_amount
+      - Add total_amount and timestamp to invoice_text
+      - Return invoice_text and total_amount
+
+   - Method rent_equipment(customer_name, items):
+      - Call generate_invoice to get invoice_text and total_amount
+      - Create invoice_filename using current timestamp
+      - Open invoice_filename for writing
+      - For each item in items:
+         - Decrease item quantity in equipment_list
+      - Return total_amount and invoice_filename
+
+   - Method return_equipment(customer_name, item):
+      - Get item details from equipment_list
+      - Calculate rental_duration and rental_fee
+      - Get current timestamp
+      - If rental_duration is less than (current date - return date):
+         - Calculate late_days and fine
+         - Add late return details to invoice_text
+         - Calculate total amount due
+      - Else:
+         - Add on-time return details to invoice_text
+         - Calculate total amount due
+      - Add return date to invoice_text
+      - Create return_invoice_filename using current timestamp
+      - Open return_invoice_filename for writing
+      - Increase item quantity in equipment_list
+      - Return return_invoice_filename
+
+4. Function main():
+   - Set equipment_file as "equipment.txt"
+   - Create a RentalShop instance with equipment_file
+   - Loop until user decides to exit:
+      - Display menu options
+      - Get user's choice
+      - If choice is 1:
+         - Call display_equipment method
+      - Else if choice is 2:
+         - Get customer_name
+         - Call display_equipment method
+         - Get items to rent
+         - Call rent_equipment method
+         - Display total amount and invoice_filename
+      - Else if choice is 3:
+         - Get customer_name
+         - Call display_equipment method
+         - Get returned item
+         - Call return_equipment method
+         - Display completion message and return_invoice_filename
+      - Else if choice is 4:
+         - Display exit message
+         - Break the loop
+      - Else:
+         - Display invalid choice message
+
+5. In "__main__" block:
+   - Call the main function
+
